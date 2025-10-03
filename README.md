@@ -1,73 +1,84 @@
-# React + TypeScript + Vite
+# Art Institute Collection Browser
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern React application that allows users to browse and select artworks from the Art Institute of Chicago's extensive collection. Built with React, TypeScript, Vite, and PrimeReact for a professional user experience.
 
-Currently, two official plugins are available:
+## 🎨 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Core Functionality
+- **Artwork Browsing**: Browse thousands of artworks from the Art Institute of Chicago API
+- **Server-Side Pagination**: Efficient pagination with 12 artworks per page
+- **Row Selection**: Select individual artworks or multiple artworks at once
+- **Selection Persistence**: Selections are maintained across page navigation
+- **Custom Selection Panel**: Bulk select functionality with overlay panel
+- **Responsive Design**: Works seamlessly on desktop and mobile devices
 
-## React Compiler
+### Advanced Features
+- **Dual Selection Modes**: Toggle between checkbox and row-click selection
+- **Cross-Page Selection**: Select more rows than available on current page
+- **Memory Efficient**: Optimized to handle large datasets without memory issues
+- **Real-time Updates**: Live selection count and status updates
+- **Sortable Columns**: Sort artworks by title, artist, date, and more
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🚀 Live Demo
 
-## Expanding the ESLint configuration
+[View Live Demo on Netlify](https://clinquant-kheer-6c4513.netlify.app/)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🛠️ Tech Stack
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **Frontend**: React 18 with TypeScript
+- **Build Tool**: Vite
+- **UI Library**: PrimeReact
+- **Styling**: CSS3 with custom components
+- **API**: Art Institute of Chicago API
+- **Deployment**: Netlify
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 📦 Installation
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Prerequisites
+- Node.js (version 18 or higher)
+- npm or yarn package manager
+
+### Setup Instructions
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/PrathamJain2002/GrowMeOrganic-Private-Limited.git
+   cd GrowMeOrganic-Private-Limited
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Start development server**
+   ```bash
+   npm run dev
+   ```
+
+4. **Open your browser**
+   Navigate to `http://localhost:3000` (or the port shown in terminal)
+
+## 🏗️ Build for Production
+
+```bash
+# Build the project
+npm run build
+
+# Preview the production build
+npm run preview
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 📁 Project Structure
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```
+src/
+├── App.tsx          # Main application component
+├── App.css          # Application styles
+├── main.tsx         # Application entry point
+└── index.css        # Global styles
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+public/
+├── vite.svg         # Vite logo
+└── _redirects       # Netlify SPA routing configuration
 ```
