@@ -7,6 +7,7 @@ import { useState, useEffect, useRef } from 'react';
 import './App.css'
 
 interface ArtworkData {
+  id: number;
   title: string;
   place_of_origin: string;
   artist_display: string;
@@ -35,6 +36,7 @@ function App() {
       const data = await response.json();
       
       const mappedArtworks = data.data.map((item: any) => ({
+        id: item.id,
         title: item.title || 'Untitled',
         place_of_origin: item.place_of_origin || 'Unknown',
         artist_display: item.artist_display || 'Unknown Artist',
@@ -162,7 +164,7 @@ function App() {
         selectionMode={rowClick ? null : 'checkbox'} 
         selection={selectedArtworks} 
         onSelectionChange={handleSelectionChange} 
-        dataKey="title"
+        dataKey="id"
         paginator 
         rows={rowsPerPage}
         totalRecords={totalRecords}
