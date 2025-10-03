@@ -23,7 +23,7 @@ function App() {
   const [rowsPerPage, setRowsPerPage] = useState(12);
   const [selectedArtworks, setSelectedArtworks] = useState<ArtworkData[]>([]);
   const [rowClick, setRowClick] = useState(false);
-  const [pageSelections, setPageSelections] = useState<{page: number, selectedCount: number}[]>([]);
+  const [pageSelections, setPageSelections] = useState<{page: number, selectedArtworks: ArtworkData[]}[]>([]);
   const [selectRowsInput, setSelectRowsInput] = useState('');
   const [pendingSelections, setPendingSelections] = useState<{page: number, count: number}[]>([]);
   const overlayPanelRef = useRef<OverlayPanel>(null);
@@ -54,10 +54,17 @@ function App() {
         
         setPageSelections(prev => {
           const filtered = prev.filter(p => p.page !== page);
-          return [...filtered, { page: page, selectedCount: rowsToSelect.length }];
+          return [...filtered, { page: page, selectedArtworks: rowsToSelect }];
         });
         
         setPendingSelections(prev => prev.filter(p => p.page !== page));
+      } else {
+        const currentPageSelection = pageSelections.find(p => p.page === page);
+        if (currentPageSelection) {
+          setSelectedArtworks(currentPageSelection.selectedArtworks);
+        } else {
+          setSelectedArtworks([]);
+        }
       }
     } catch (error) {
       console.error('Error:', error);
@@ -70,21 +77,6 @@ function App() {
     fetchArtworks(1);
   }, []);
 
-  useEffect(() => {
-    if (artworks.length > 0) {
-      const pendingForThisPage = pendingSelections.find(p => p.page === currentPage);
-      
-      if (!pendingForThisPage) {
-        const currentPageSelection = pageSelections.find(p => p.page === currentPage);
-        if (currentPageSelection) {
-          const rowsToSelect = artworks.slice(0, currentPageSelection.selectedCount);
-          setSelectedArtworks(rowsToSelect);
-        } else {
-          setSelectedArtworks([]);
-        }
-      }
-    }
-  }, [artworks, currentPage, pendingSelections]);
 
 
   const onPageChange = (event: any) => {
@@ -94,7 +86,7 @@ function App() {
     if (selectedArtworks.length > 0) {
       setPageSelections(prev => {
         const filtered = prev.filter(p => p.page !== currentPage);
-        return [...filtered, { page: currentPage, selectedCount: selectedArtworks.length }];
+        return [...filtered, { page: currentPage, selectedArtworks: [...selectedArtworks] }];
       });
     }
     
@@ -108,7 +100,7 @@ function App() {
     
     setPageSelections(prev => {
       const filtered = prev.filter(p => p.page !== currentPage);
-      return [...filtered, { page: currentPage, selectedCount: newSelections.length }];
+      return [...filtered, { page: currentPage, selectedArtworks: [...newSelections] }];
     });
   };
 
@@ -122,14 +114,14 @@ function App() {
         
         setPageSelections(prev => {
           const filtered = prev.filter(p => p.page !== currentPage);
-          return [...filtered, { page: currentPage, selectedCount: rowsToSelect.length }];
+          return [...filtered, { page: currentPage, selectedArtworks: [...rowsToSelect] }];
         });
       } else {
         setSelectedArtworks([...artworks]);
         
         setPageSelections(prev => {
           const filtered = prev.filter(p => p.page !== currentPage);
-          return [...filtered, { page: currentPage, selectedCount: artworks.length }];
+          return [...filtered, { page: currentPage, selectedArtworks: [...artworks] }];
         });
         
         const remainingRows = numRows - artworks.length;
@@ -162,7 +154,7 @@ function App() {
       <div style={{ marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
         <span>Row Click Mode:</span>
         <InputSwitch checked={rowClick} onChange={(e) => setRowClick(e.value)} />
-         <span>Selected: {pageSelections.reduce((total, page) => total + page.selectedCount, 0) + pendingSelections.reduce((total, pending) => total + pending.count, 0)}</span>
+         <span>Selected: {pageSelections.reduce((total, page) => total + page.selectedArtworks.length, 0) + pendingSelections.reduce((total, pending) => total + pending.count, 0)}</span>
       </div>
 
       <DataTable 
