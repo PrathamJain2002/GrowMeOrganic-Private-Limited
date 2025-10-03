@@ -17,7 +17,6 @@ A modern React application that allows users to browse and select artworks from 
 - **Cross-Page Selection**: Select more rows than available on current page
 - **Memory Efficient**: Optimized to handle large datasets without memory issues
 - **Real-time Updates**: Live selection count and status updates
-- **Sortable Columns**: Sort artworks by title, artist, date, and more
 
 ## 🚀 Live Demo
 
